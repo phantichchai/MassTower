@@ -9,13 +9,15 @@ public class Waypoints : MonoBehaviour
     private List<PathNode> path = new List<PathNode>();
     public static Transform[] points;
     public Transform node;
+    private FileSystem file = new FileSystem();
 
     private void Awake()
     {
         pathFinding = new PathFinding(GameMenu.GridWidth, GameMenu.GridHeight, GameMenu.CellSize, GameMenu.OriginPosition);
+        SetPathWaypoints();
         if (path != null)
         {
-            path = pathFinding.FindPath(0, 0, 9, 8);
+            path = pathFinding.FindPath(0, 2, 15, 2);
             points = new Transform[path.Count];
 
             for (int i = 0; i < path.Count; i++)
@@ -42,6 +44,16 @@ public class Waypoints : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             pathFinding.GetGrid().GetGridObject(x, y).SetIsWalkable();
+        }
+    }
+
+    public void SetPathWaypoints()
+    {
+        file.LoadPathWaypoints();
+        for(int i = 0; i < file.getLengthXY(); i++)
+        {
+            (int, int) gridIndex = file.getXY(i);
+            pathFinding.GetGrid().GetGridObject(gridIndex.Item1, gridIndex.Item2).SetIsWalkable();
         }
     }
 }

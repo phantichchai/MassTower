@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] GameObject buttonMusic;
+    [SerializeField] GameObject buttonSound;
     private void Start()
     {
-        transform.Find("ButtonMusic").gameObject.SetActive(SoundManager.Instance().music);
-        transform.Find("ButtonSound").gameObject.SetActive(SoundManager.Instance().sound);
+        buttonMusic.SetActive(SoundManager.Instance().music);
+        buttonSound.SetActive(SoundManager.Instance().sound);
     }
 
     public void PlayGame()
@@ -33,21 +35,21 @@ public class MainMenu : MonoBehaviour
     {
         SoundManager.Instance().ClickButton();
         SoundManager.Instance().MuteBackgroundMusic();
-        transform.Find("ButtonMusic").gameObject.SetActive(SoundManager.Instance().music);
+        buttonMusic.SetActive(SoundManager.Instance().music);
     }
 
     public void ClickUnMuteMusic()
     {
         SoundManager.Instance().ClickButton();
         SoundManager.Instance().UnMuteBackgroundMusic();
-        transform.Find("ButtonMusic").gameObject.SetActive(SoundManager.Instance().music);
+        buttonMusic.SetActive(SoundManager.Instance().music);
     }
 
     public void ClickMuteSound()
     {
         SoundManager.Instance().ClickButton();
         SoundManager.Instance().MuteSound();
-        transform.Find("ButtonSound").gameObject.SetActive(SoundManager.Instance().sound);
+        buttonSound.SetActive(SoundManager.Instance().sound);
         SoundManager.Instance().gameObject.GetComponent<SoundManager>().enabled = false;
     }
 
@@ -55,7 +57,7 @@ public class MainMenu : MonoBehaviour
     {
         SoundManager.Instance().ClickButton();
         SoundManager.Instance().UnMuteSound();
-        transform.Find("ButtonSound").gameObject.SetActive(SoundManager.Instance().sound);
+        buttonSound.SetActive(SoundManager.Instance().sound);
         SoundManager.Instance().gameObject.GetComponent<SoundManager>().enabled = true;
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class Tiles
 {
     private Grid<Tiles> grid;
-    private GameObject transform;
+    private GameObject tileGameObject;
 
     public int x;
     public int y;
@@ -18,25 +18,25 @@ public class Tiles
         this.y = y;
     }
 
-    public void SetTransform(GameObject transform)
+    public void SetTransform(GameObject tileGameObject)
     {
-        this.transform = transform;
+        this.tileGameObject = tileGameObject;
         grid.TriggerGridObjectChanged(x, y);
     }
 
     public void ClearTransform()
     {
-        transform = null;
+        tileGameObject = null;
         grid.TriggerGridObjectChanged(x, y);
     }
 
     public bool CanBuild()
     {
-        return transform == null;
+        return tileGameObject == null;
     }
 
     public override string ToString()
     {
-        return x + ", " + y + "\n" + transform;
+        return x + ", " + y + "\n" + tileGameObject + "\n";
     }
 }

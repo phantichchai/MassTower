@@ -159,6 +159,4 @@ public abstract class Tower : MonoBehaviour
     {
 		isOver = false;
     }
-
-
 }

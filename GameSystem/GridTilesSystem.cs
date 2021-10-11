@@ -5,11 +5,11 @@ using CodeMonkey.Utils;
 
 public class GridTilesSystem : MonoBehaviour
 {
-    private  Grid<Tiles> grid;
-    private GameObject buildTransform; 
+    private Grid<Tiles> grid;
+    private GameObject buildTransform;
     private void Awake()
     {
-        grid = new Grid<Tiles>(GameMenu.GridWidth, GameMenu.GridHeight, GameMenu.CellSize, GameMenu.OriginPosition, (Grid<Tiles> g, int x, int y) => new Tiles(g, x, y));
+        grid = new Grid<Tiles>(GameMenu.GridWidth, GameMenu.GridHeight, GameMenu.CellSize, GameMenu.OriginPosition, (Grid<Tiles> g, int x, int y) => new Tiles(g, x, y), true);
     }
 
     private void Update()
@@ -19,11 +19,11 @@ public class GridTilesSystem : MonoBehaviour
             grid.GetXY(UtilsClass.GetMouseWorldPosition(), out int x, out int y);
 
             Tiles tiles = grid.GetGridObject(x, y);
-
+            
             if (tiles != null && GameMenu.Instance().ClickButton != null)
             {
                 buildTransform = Instantiate(GameMenu.Instance().ClickButton.TowerPrefab, grid.GetWorldPosition(x, y), Quaternion.identity);
-
+                
                 if (tiles.CanBuild() && GameMenu.Instance().MoneyValue >= buildTransform.GetComponent<Tower>().GetPrice())
                 {
                     tiles.SetTransform(buildTransform);
@@ -32,14 +32,21 @@ public class GridTilesSystem : MonoBehaviour
                 }
                 else
                 {
-                    UtilsClass.CreateWorldTextPopup("Money Not Enough", UtilsClass.GetMouseWorldPosition(), 1f);
+                    if (tiles.CanBuild())
+                    {
+                        UtilsClass.CreateWorldTextPopup("Money Not Enough", UtilsClass.GetMouseWorldPosition(), 1f);
+                    }
+                    else
+                    {
+                        UtilsClass.CreateWorldTextPopup("Can't Build", UtilsClass.GetMouseWorldPosition(), 1f);
+                    }
                     GameMenu.Instance().ClickButton = null;
                     Destroy(buildTransform);
                 }
                 Hover.Instance().Deactivate();
             }
         }
- 
+
         if (Input.GetMouseButtonDown(1))
         {
             if (GameMenu.Instance().ClickButton != null)
@@ -48,6 +55,8 @@ public class GridTilesSystem : MonoBehaviour
                 GameMenu.Instance().ClickButton = null;
                 Hover.Instance().Deactivate();
             }
+
+            
         }
     }
 }

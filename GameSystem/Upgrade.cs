@@ -161,11 +161,12 @@ public class Upgrade : MonoBehaviour
         }
     }
 
-    public void SellTower(GameObject tower)
+    public void SellTower(GameObject gameObject)
     {
-        totalPriceUpgrade += tower.GetComponent<Tower>().GetPrice();
+        Tower tower = gameObject.GetComponent<Tower>();
+        totalPriceUpgrade += tower.GetPrice();
         GameMenu.Instance().MoneyValue += totalPriceUpgrade / 2;
-        Destroy(tower);
+        Destroy(gameObject);
     }
 
     private void ResetStat()
