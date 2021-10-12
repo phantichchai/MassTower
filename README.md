@@ -1,6 +1,8 @@
 # MassTower
 Tower Defense 2D Game
 
+This is my first unity project which practice skills to build a simple tower defense game from coding in c# and unity engine.
+
 # **Table of Contents**
 - [Technology](#technology)
 - [Main Menu](#main)
